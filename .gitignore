@@ -1,0 +1,92 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+.venv_drift/
+.venv_dqops/
+.venv_dqops_old/
+env/
+venv/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE / editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# Docker / local volumes
+docker-data/
+postgres-data/
+dqops-data/
+
+# DQOps local files
+.dqo/
+.dqops/
+userhome/
+.dqo-user-home/
+
+# Evidently reports
+drift/reports/*.html
+drift/reports/*.json
+
+# Generated diagrams
+diagrams/*.png
+diagrams/*.pdf
+diagrams/*.dot
+
+# Screenshots
+screenshots/*.png
+screenshots/*.jpg
+screenshots/*.jpeg
+
+# Keep folders in git
+!drift/reports/.gitkeep
+!diagrams/.gitkeep
+!screenshots/.gitkeep
+
+# Large media files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.gif
+
+# ML artifacts / models
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
+mlruns/
+artifacts/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+.venv_drift

@@ -1,0 +1,50 @@
+services:
+  ml_service:
+    image: python:3.11-slim
+    container_name: ml_service
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt &&
+             uvicorn main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - ml_service
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./monitoring/grafana/grafana.yml:/etc/grafana/provisioning/dashboards/grafana.yml
+      - ./monitoring/grafana/prometheus_datasource.yml:/etc/grafana/provisioning/datasources/prometheus_datasource.yml
+      - ./monitoring/grafana/alert_rules.yml:/etc/grafana/provisioning/alerting/alert_rules.yml
+      - ./monitoring/grafana_dashboard.json:/var/lib/grafana/dashboards/grafana_dashboard.json
+    depends_on:
+      - prometheus
+
+  postgres:
+    image: postgres:16
+    container_name: postgres_dqops
+    environment:
+      POSTGRES_USER: dqops_user
+      POSTGRES_PASSWORD: dqops_password
+      POSTGRES_DB: dqops_demo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dqops_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_dqops_data:
